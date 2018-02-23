@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MapLoc</string>
+    <string name="title_activity_maps">MapLoc</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_StartStop_service">Start Service</string>
+</resources>
