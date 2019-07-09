@@ -11,9 +11,11 @@ import com.locsysrepo.sensors.WiFiScan;
 import com.locsysrepo.sensors.WiFiScanner;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ public class BackgroundService extends Service implements OnSensorDataCallback, 
     private boolean  sensingMagn;
     private boolean  sensingGyro;
     private boolean  sensingWifi;
+    private PowerManager.WakeLock wl;
 
     public boolean   isLoggingSensorData = false;
 
@@ -61,7 +64,10 @@ public class BackgroundService extends Service implements OnSensorDataCallback, 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, BackgroundService.class.getName());
+        wl.acquire();
+        
         ism = new InertialSensorManager(this);
         Log.i("serviceOnCreate","Created service");
     }
